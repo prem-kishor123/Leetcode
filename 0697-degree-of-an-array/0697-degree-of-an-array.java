@@ -1,27 +1,18 @@
 class Solution {
     public int findShortestSubArray(int[] nums) {
-        Map<Integer, Integer> freq = new HashMap<>();
-        Map<Integer, Integer> first = new HashMap<>();
-        Map<Integer, Integer> last = new HashMap<>();
-
-        int degree = 0;
+        Map<Integer, int[]> map = new HashMap<>();
+        int degree = 0, ans = nums.length;
 
         for (int i = 0; i < nums.length; i++) {
-            int x = nums[i];
-
-            freq.put(x, freq.getOrDefault(x, 0) + 1);
-            first.putIfAbsent(x, i);
-            last.put(x, i);
-
-            degree = Math.max(degree, freq.get(x));
+            map.putIfAbsent(nums[i], new int[]{0, i, i}); 
+            int[] v = map.get(nums[i]);
+            v[0]++; v[2] = i;
+            degree = Math.max(degree, v[0]);
         }
-      int ans = nums.length;
 
-        for (int x : freq.keySet()) {
-            if (freq.get(x) == degree) {
-                ans = Math.min(ans, last.get(x) - first.get(x) + 1);
-            }
-        }
+        for (int[] v : map.values())
+            if (v[0] == degree)
+                ans = Math.min(ans, v[2] - v[1] + 1);
 
         return ans;
     }
