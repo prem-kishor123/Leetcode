@@ -1,10 +1,11 @@
 class Solution {
     public int reverseDegree(String s) {
-        int sum = 0 ;
-        for(int i = 0 ; i < s.length() ;i++){
-            int a = (int)(s.charAt(i) - 'a');
-            sum += (26 -a)*(i+1);
-        }
-        return sum ;
+        int sum=0;
+        int n=s.length();
+        for(int i=0;i<n;i++){
+            int ascii=(int)s.charAt(i);
+            sum+=(i+1)*(123-ascii);
+        }  
+        return sum;
     }
 }
