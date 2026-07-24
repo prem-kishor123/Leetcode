@@ -1,29 +1,23 @@
 class Solution {
-
+    List<List<Integer>> ans= new ArrayList<>();
     public List<List<Integer>> subsets(int[] nums) {
-
-        List<List<Integer>> result = new ArrayList<>();
-
-        backtrack(0, nums, new ArrayList<>(), result);
-
-        return result;
+        backtrack(nums , 0,new ArrayList<>());
+        return ans;
+        
+}
+private void backtrack(int[]nums ,int index,List<Integer> current){
+    if (index==nums.length){
+        ans.add(new ArrayList<>(current));
+        return;
     }
 
-    private void backtrack(int start, int[] nums,
-                           List<Integer> current,
-                           List<List<Integer>> result) {
+    current.add(nums[index]);
+    backtrack(nums , index+1 ,current);
 
-        result.add(new ArrayList<>(current));
+    current.remove(current.size() -1);
 
-        for (int i = start; i < nums.length; i++) {
-
-            current.add(nums[i]);
-
-            backtrack(i + 1, nums, current, result);
-
-            current.remove(current.size() - 1);
-        }
-    }
+    backtrack(nums, index+1, current);
+}
 }
 
 // Synced seamlessly with LeetHub Pro
